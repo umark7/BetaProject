@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="script.js" defer></script>
+  <link href="style.css" rel="stylesheet">
+  <title>Tabs</title>
+</head>
+<body>
+  <ul class="tabs">
+    <li data-tab-target="#PlainView" class="active tab">PlainView</li>
+    <li data-tab-target="#TableView" class="tab">TableView</li>
+    <li data-tab-target="#GraphView" class="tab">GraphView</li>
+    <li data-tab-target="#DataDownloadPage" class="tab">DownloadView</li>
+  </ul>
+
+  <div class="tab-content">
+    <div id="PlainView" data-tab-content class="active">
+      <h1>PlainView</h1>
+      <p>This is the PlainView</p>
+    </div>
+    <div id="TableView" data-tab-content>
+      <h1>TableView</h1>
+      <p>Some information on TableView</p>
+    </div>
+    <div id="GraphView" data-tab-content>
+      <h1>GraphView</h1>
+      <p>GraphView is here</p>
+    </div>
+    <div id="#DataDownloadPage" data-tab-content>
+        <h1>DataDownloadPage</h1>
+        <p>Download Data for Challenges here</p>
+    </div>
+  </div>
+</body>
+</html>
