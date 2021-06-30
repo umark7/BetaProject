@@ -35,13 +35,16 @@ def switch_case(index,df):
         print("ERROR: Inputted index is part of a multi-column question. Enter the first index of the question.")
         pass
     
+    #Short Answer
     elif qtype(index) == 4:
         print(df[index])
         #return df[index]
-        
+    
+    #normal response single-column
     elif qtype(index) == 1:
         pass #this is where Rishi's code will go
-        
+    
+    #has "specify other" option
     elif qtype(index) == 2:
         question_df = df[index]
         plt.figure(figsize=(8,5))
@@ -51,7 +54,8 @@ def switch_case(index,df):
         print(g)
         print(df[index+1])
         #return question_df
-        
+    
+    #question 15
     elif index == 40:
         #make new dataframe for export
         cols = [40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56]
@@ -61,7 +65,7 @@ def switch_case(index,df):
         #make a new dataframe where each row is the part and if it was yes or no
         q_array = []
         for i in range(40,56):
-            for j in range(0,60):
+            for j in range(0,df.shape[0]):
                 q_part = questions.iloc[1][i]
                 yn = df.iloc[j][i]
                 q_array.append([q_part,yn])
@@ -72,6 +76,7 @@ def switch_case(index,df):
         p_title = questions[index][0]
         plt.title(p_title)
     
+    #question 13 and 16
     elif qtype(index) == 3:
         #create new data frame
         first_col = index
@@ -102,4 +107,4 @@ def switch_case(index,df):
         
         #return question_df
         
-switch_case(40, dataf)
+switch_case(10, dataf)
