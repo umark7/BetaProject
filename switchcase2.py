@@ -17,7 +17,7 @@ pd.set_option("display.max_rows", None, "display.max_columns", None)
 dataf
 
 def qtype(index):
-    if pd.isna(questions[index][0])
+    if pd.isna(questions[index][0]):
         return 5
     elif questions[index][1].find('Open')!=-1:
         return 4
@@ -30,9 +30,6 @@ def qtype(index):
      
 #print(questions[10][0])  
 #print(qtype(16))
-
-#input the index of the question you want a graph of and the dataframe with all the answers
-#this function will generate a graph for that question
 def switch_case(index,df):
     if qtype(index) == 5:
         print("ERROR: Inputted index is part of a multi-column question. Enter the first index of the question.")
@@ -49,27 +46,31 @@ def switch_case(index,df):
         question_df = df[index]
         plt.figure(figsize=(8,5))
         g = sns.countplot(y = df[index])
-        #q_title = questions[index][0]
+        q_title = questions[index][0]
         plt.title(q_title)
         print(g)
         print(df[index+1])
         #return question_df
         
-    elif index == 41:
-        cols = [41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57]
+    elif index == 40:
+        #make new dataframe for export
+        cols = [40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56]
         question_df = df[cols]
         question_IDdf = questions[cols]
         
         #make a new dataframe where each row is the part and if it was yes or no
         q_array = []
-        for i in range(41,56):
+        for i in range(40,56):
             for j in range(0,60):
                 q_part = questions.iloc[1][i]
                 yn = df.iloc[j][i]
                 q_array.append([q_part,yn])
-        #make graph        
+        #make graph    
         q_df = pd.DataFrame(q_array, columns=['Factor', 'Answer'])
+        plt.figure(figsize=(8,10))
         sns.countplot(y = 'Factor', hue = 'Answer', data = q_df, orient ='h')
+        p_title = questions[index][0]
+        plt.title(p_title)
     
     elif qtype(index) == 3:
         #create new data frame
@@ -101,4 +102,4 @@ def switch_case(index,df):
         
         #return question_df
         
-switch_case(, dataf)
+switch_case(40, dataf)
