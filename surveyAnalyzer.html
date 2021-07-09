@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+    <title>Centennial Challenges Survey Data Filterer</title>
+    <head>
+        <h1>Welcome to the Centennial Challenges Survey Data Filterer</h1>
+    </head>
+
+    <!--UPLOAD DATA -->
+    <section id = "uplaod">
+        <h2>Upload your data</h2>
+        <p>upload a complete CSV file from Survey Monkey</p>
+        <form action= "{% url "myapp:upload_csv" %}"" method="POST" enctype="multipart/form-data"> 
+            {% csrf_token %}
+            <div>
+              <label for="name">File: </label>
+              <div>
+                <input type="file" name="csv_file" required="True">
+              </div>          
+            </div>
+            <div>          
+              <div style="margin-bottom:10px;">
+                 <button> <span style="margin-right:5px;"></span>Upload </button>
+              </div> 
+            </div>
+            </form>
+    </section>
+    <section id = "filter">
+        <h2>Filter your Data</h2>
+        <div style="float: left;">
+            <p style = "text-align: center;">Either check all challenges or enter specific ones.</p>
+            <form action = "python_used_to_process form">
+                <input type = "checkbox" id = "all_chals" name = "all_chals">
+                <label for = "all_chals">All Challenges</label><br>
+                <label for = "enter_chal">Enter Challenge</label>
+                <input type =  "text" id = "enter_chal" name = "enter_chal"><br>
+                <!--These add and remove functions need to be written. I think they can be doen in js-->
+                <button id = "add_chal_button" onclick = "function_that_adds_enter_chal_field()">Add Challenge</button>
+                <button id = "remove_chal_button" onclick = "function_that_removes_enter_chal_field()">Remove Challenge</button>
+            </form>
+        </div>
+        <div style="float: left;">
+            <p style="text-align: center;">Select which multiple choice questions answers you want to filter the data through</p>
+            <form action = "python_used_to_process form">
+                <div style = "float: left;">
+                    <input type = "checkbox" id = "q1" name = "q1">
+                    <label for = "q1">1. 2nd timer</label><br>
+                     <input type = "checkbox" id = "q3" name = "q3">
+                    <label for = "q3">3. Multi-phase participant</label><br>
+                    <input type = "checkbox" id = "q4" name = "q4">
+                    <label for = "q4">4. Why not multi-phase participant</label><br>
+                    <input type = "checkbox" id = "q7" name = "q7">
+                    <label for = "q7">7. Recommendation score</label><br>
+                    <input type = "checkbox" id = "q9" name = "q9">
+                    <label for = "q9">9. Participate again</label><br>
+                    <input type = "checkbox" id = "q12" name = "q12">
+                    <label for = "q12">12. Did you win</label><br>
+                </div>
+                <div style = "float: left;">
+                    <input type = "checkbox" id = "q18" name = "q18">
+                    <label for = "q18">18. Challenge timeline</label><br>
+                    <input type = "checkbox" id = "q20" name = "q20">
+                    <label for = "q20">20. Difficulty</label><br>
+                    <input type = "checkbox" id = "q22" name = "q22">
+                    <label for = "q22">22. US Citizen</label><br>
+                    <input type = "checkbox" id = "q27" name = "q27">
+                    <label for = "q27">27. Barriers</label><br>
+                    <input type = "checkbox" id = "q30" name = "q30">
+                    <label for = "q30">30. Affiliation</label><br>
+                    <input type = "checkbox" id = "q31" name = "q31">
+                    <label for = "q31">31. Working in industry (past)</label><br>
+                </div>
+                <div style = "float: left;">
+                    <input type = "checkbox" id = "q32" name = "q32">
+                    <label for = "q32">32. Working in industry (present)</label><br>
+                    <input type = "checkbox" id = "q35" name = "q35">
+                    <label for = "q35">35. Did Challenge help you</label><br>
+                    <input type = "checkbox" id = "q37" name = "q37">
+                    <label for = "q37">37. Did Challenge help NASA</label><br>
+                    <input type = "checkbox" id = "q40" name = "q30">
+                    <label for = "q40">40. Budget</label><br>
+                    <input type = "checkbox" id = "q42" name = "q42">
+                    <label for = "q42">42. Time committment full-time</label><br>
+                    <input type = "checkbox" id = "q43" name = "q43">
+                    <label for = "q43">43. % of full-time</label><br>
+                </div>
+                <div style = "float: left;">
+                    <input type = "checkbox" id = "q51" name = "q51">
+                    <label for = "q51">51. Media exposure</label><br>
+                    <input type = "checkbox" id = "q53" name = "q53">
+                    <label for = "q53">53. Publications</label><br>
+                    <input type = "checkbox" id = "q55" name = "q55">
+                    <label for = "q55">55. Did Challenge help NASA</label><br>
+                </div>
+            </form>
+        </div>
+    </section>
+    <section>
+        <h2>Download filtered data as CSV</h2>
+    </section>
+    <section>
+        <h2>Select which question to view from the filtered data</h2>
+        <form action = "python_used_to_process_this.py">
+            <input type = "checkbox" id = "allQs" name = "allQs">
+            <label for = "allQs">All Questions</label><br>
+            <select name = question_dropdown>
+                <option value = 9>question 1</option>
+                <option value = 10>question 2</option>
+                <option value = 12>question 3</option>
+                <option value = 13>question 4</option>
+                <option value = 15>question 5</option>
+            </select>
+        </form>
+    </section>
+
+</html>
