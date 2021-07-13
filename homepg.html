@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html>
+    <style>
+        h2{
+           text-align: center; 
+        }
+    </style>
+    <script>
+        function showanswers(qid, aid){
+            var q = document.getElementById(qid);
+            var a = document.getElementById(aid);
+            if(q.checked == true){
+                a.style.display = "block";
+            } else{
+                a.style.display = "none";
+            }
+        }
+    </script>
+
+    <title>Centennial Challenges Survey Data Filterer</title>
+    <head>
+        <h1>Welcome to the Centennial Challenges Survey Data Filterer</h1>
+    </head>
+
+    <!--UPLOAD DATA -->
+    <section id = "uplaod" style="display:block;">
+        <h2>Upload your data</h2>
+        <p>upload a complete CSV file from Survey Monkey</p>
+        <form action= "{% url "myapp:upload_csv" %}"" method="POST" enctype="multipart/form-data"> 
+            {% csrf_token %}
+            <div>
+              <label for="name">File: </label>
+              <div>
+                <input type="file" name="csv_file" required="True">
+              </div>          
+            </div>
+            <div>          
+              <div style="margin-bottom:10px;">
+                 <button> <span style="margin-right:5px;"></span>Upload </button>
+              </div> 
+            </div>
+            </form>
+    </section>
+
+    <!--FILTER-->
+    <section id = "filter" style="display:block;">
+        <h2>Filter your Data</h2>
+        <div id = "challenge_filter_div" style="display:inline-block;">
+            <p style = "text-align: left;">Either check all challenges or enter specific ones.</p>
+            <form action = "python_used_to_process form">
+                <input type = "checkbox" id = "all_chals" name = "all_chals">
+                <label for = "all_chals">All Challenges</label><br>
+                <label for = "enter_chal">Enter Challenge</label>
+                <input type =  "text" id = "enter_chal" name = "enter_chal"><br>
+                <!--These add and remove functions need to be written. I think they can be doen in js-->
+                <button id = "add_chal_button" onclick = "function_that_adds_enter_chal_field()">Add Challenge</button>
+                <button id = "remove_chal_button" onclick = "function_that_removes_enter_chal_field()">Remove Challenge</button>
+            </form>
+        </div>
+        <div id = "qa_filter_div" style="display:block;">
+            <p style="text-align: left;">Select which multiple choice questions answers you want to filter the data through</p>
+            <form action = "python_used_to_process form">
+                <div style = "display:block;">
+                    <input type = "checkbox" id = "q1" name = "question" onclick = "showanswers('q1', 'answer1')">
+                    <label for = "q1">1. 2nd timer</label><br>
+                    <div id = "answer1" style = "display:none; padding-left: 50px;">
+                        <form>
+                            <input type = "checkbox" id = "a1_1" name = "answer" value = "Yes">
+                            <label for = "a1_1">Yes</label><br> 
+                            <input type = "checkbox" id = "a1_2" name = "answer" value = "No">
+                            <label for = "a1_2">No</label><br> 
+                        </form>
+                    </div>
+                    <input type = "checkbox" id = "q3" name = "question" onclick = "showanswers('q3', 'answer3')">
+                    <label for = "q3">3. Multi-phase participant</label><br>
+                    <div id = "answer3" style = "display:none; padding-left: 50px;">
+                        <form>
+                            <input type = "checkbox" id = "a3_1" name = "answer" value = "Yes">
+                            <label for = "a3_1">Yes</label><br> 
+                            <input type = "checkbox" id = "a3_2" name = "answer" value = "No">
+                            <label for = "a3_2">No</label><br> 
+                        </form>
+                    </div>
+                    <input type = "checkbox" id = "q4" name = "question" onclick = "showanswers('q4', 'answer4')">
+                    <label for = "q4">4. Why not multi-phase participant</label><br>
+                    <div id = "answer4" style = "display:none; padding-left: 50px;">
+                        <form>
+                            <input type = "checkbox" id = "a4_1" name = "answer" value = "Did not qualify">
+                            <label for = "a4_1">Did not qualify</label><br> 
+                            <input type = "checkbox" id = "a4_2" name = "answer" value = "Was not interested">
+                            <label for = "a4_2">Was not interested</label><br> 
+                            <input type = "checkbox" id = "a4_3" name = "answer" value = "Did not have the skill set">
+                            <label for = "a4_3">Did not have the skill set</label><br> 
+                            <input type = "checkbox" id = "a4_4" name = "answer" value = "Financial constraints">
+                            <label for = "a4_4">Financial constraints</label><br> 
+                            <input type = "checkbox" id = "a4_5" name = "answer" value = "Loss of team personnel/no team">
+                            <label for = "a4_5">Loss of team personnel/no team</label><br> 
+                            <input type = "checkbox" id = "a4_6" name = "answer" value = "Could not build a team">
+                            <label for = "a4_6">Could not build a team</label><br> 
+                            <input type = "checkbox" id = "a4_7" name = "answer" value = "Time constraints">
+                            <label for = "a4_7">Time constraints</label><br> 
+                            <input type = "checkbox" id = "a4_8" name = "answer" value = "Technical challenges">
+                            <label for = "a4_8">Technical challenges</label><br> 
+                            <input type = "checkbox" id = "a4_9" name = "answer" value = "Experience from previous challenges">
+                            <label for = "a4_9">Experience from previous challenges</label><br> 
+                            <input type = "checkbox" id = "a4_10" name = "answer" value = "There were no additional phases">
+                            <label for = "a4_10">There were no additional phases</label><br> 
+                            <input type = "checkbox" id = "a4_11" name = "answer" value = "Other (please specify)">
+                            <label for = "a4_11">Other (please specify)</label><br> 
+                        </form>
+                    </div>
+                    <input type = "checkbox" id = "q7" name = "question" onclick = "showanswers('q7', 'answer7')">
+                    <label for = "q7">7. Recommendation score</label><br>
+                    <div id = "answer7" style = "display:none; padding-left: 50px;">
+                        <form>
+                            <input type = "checkbox" id = "a7_1" name = "answer" value = "1">
+                            <label for = "a7_1">1</label><br> 
+                            <input type = "checkbox" id = "a7_2" name = "answer" value = "2">
+                            <label for = "a7_2">2</label><br> 
+                            <input type = "checkbox" id = "a7_3" name = "answer" value = "3">
+                            <label for = "a7_3">3</label><br> 
+                            <input type = "checkbox" id = "a7_4" name = "answer" value = "4">
+                            <label for = "a7_4">4</label><br> 
+                            <input type = "checkbox" id = "a7_5" name = "answer" value = "5">
+                            <label for = "a7_5">5</label><br> 
+                            <input type = "checkbox" id = "a7_6" name = "answer" value = "6">
+                            <label for = "a7_6">6</label><br> 
+                            <input type = "checkbox" id = "a7_7" name = "answer" value = "7">
+                            <label for = "a7_7">7</label><br> 
+                            <input type = "checkbox" id = "a7_8" name = "answer" value = "8">
+                            <label for = "a7_8">8</label><br> 
+                            <input type = "checkbox" id = "a7_9" name = "answer" value = "9">
+                            <label for = "a7_9">9</label><br> 
+                            <input type = "checkbox" id = "a7_10" name = "answer" value = "10">
+                            <label for = "a7_10">10</label><br> 
+                        </form>
+                    </div>
+                    <input type = "checkbox" id = "q9" name = "question" onclick = "showanswers('q9', 'answer9')">
+                    <label for = "q9">9. Participate again</label><br>
+                    <div id = "answer9" style = "display:none; padding-left: 50px;">
+                        <form>
+                            <input type = "checkbox" id = "a9_1" name = "answer" value = "Yes">
+                            <label for = "a9_1">Yes</label><br> 
+                            <input type = "checkbox" id = "a9_2" name = "answer" value = "No">
+                            <label for = "a9_2">No</label><br> 
+                            <input type = "checkbox" id = "a9_3" name = "answer" value = "Unsure">
+                            <label for = "a9_2">Unsure</label><br> 
+                        </form>
+                    </div>
+                    <input type = "checkbox" id = "q12" name = "question" onclick = "showanswers('q12', 'answer12')">
+                    <label for = "q12">12. Did you win</label><br>
+                    <div id = "answer12" style = "display:none; padding-left: 50px;">
+                        <form>
+                            <input type = "checkbox" id = "a12_1" name = "answer" value = "Yes">
+                            <label for = "a12_1">Yes</label><br> 
+                            <input type = "checkbox" id = "a12_2" name = "answer" value = "No">
+                            <label for = "a12_2">No</label><br> 
+                        </form>
+                    </div>
+                </div>
+                <div style = "display:block;">
+                    <input type = "checkbox" id = "q18" name = "q18" onclick = "showanswers('q18', 'answer18')">
+                    <label for = "q18">18. Challenge timeline</label><br>
+                    <div id = "answer18" style = "display:none; padding-left: 50px;">
+                        <form>
+                            <input type = "checkbox" id = "a18_1" name = "answer" value = "Too long">
+                            <label for = "a18_1">Too long</label><br> 
+                            <input type = "checkbox" id = "a18_2" name = "answer" value = "Too short">
+                            <label for = "a18_2">Too short</label><br> 
+                            <input type = "checkbox" id = "a18_3" name = "answer" value = "Just right">
+                            <label for = "a18_3">Just right</label><br> 
+                        </form>
+                    </div>
+                    <input type = "checkbox" id = "q20" name = "q20" onclick = "showanswers('q20', 'answer20')">
+                    <label for = "q20">20. Difficulty</label><br>
+                    <div id = "answer20" style = "display:none; padding-left: 50px;">
+                        <form>
+                            <input type = "checkbox" id = "a20_1" name = "answer" value = "Too hard">
+                            <label for = "a20_1">Too hard</label><br> 
+                            <input type = "checkbox" id = "a20_2" name = "answer" value = "Too easy">
+                            <label for = "a20_2">Too easy</label><br> 
+                            <input type = "checkbox" id = "a20_3" name = "answer" value = "Just right">
+                            <label for = "a20_3">Just right</label><br> 
+                        </form>
+                    </div>
+                    <input type = "checkbox" id = "q22" name = "q22" onclick = "showanswers('q22', 'answer22')"> 
+                    <label for = "q22">22. US Citizen</label><br>
+                    <div id = "answer22" style = "display:none; padding-left: 50px;">
+                        <form>
+                            <input type = "checkbox" id = "a22_1" name = "answer" value = "Yes">
+                            <label for = "a22_1">Yes</label><br> 
+                            <input type = "checkbox" id = "a22_2" name = "answer" value = "No">
+                            <label for = "a22_2">No</label><br> 
+                        </form>
+                    </div>
+                    <input type = "checkbox" id = "q27" name = "q27" onclick = "showanswers('q27', 'answer27')">
+                    <label for = "q27">27. Barriers</label><br>
+                    <div id = "answer27" style = "display:none; padding-left: 50px;">
+                        <form>
+                            <input type = "checkbox" id = "a27_1" name = "answer" value = "Yes">
+                            <label for = "a27_1">Yes</label><br> 
+                            <input type = "checkbox" id = "a27_2" name = "answer" value = "No">
+                            <label for = "a27_2">No</label><br> 
+                        </form>
+                    </div>
+                    <input type = "checkbox" id = "q30" name = "q30" onclick = "showanswers('q30', 'answer30')">
+                    <label for = "q30">30. Affiliation</label><br>
+                    <div id = "answer30" style = "display:none; padding-left: 50px;">
+                        <form>
+                            <input type = "checkbox" id = "a30_1" name = "answer" value = "Undergraduate Student">
+                            <label for = "a30_1">Undergraduate Student</label><br> 
+                            <input type = "checkbox" id = "a30_2" name = "answer" value = "Graduate Student">
+                            <label for = "a30_2">Graduate Student</label><br>
+                            <input type = "checkbox" id = "a30_3" name = "answer" value = "Professor">
+                            <label for = "a30_3">Professor</label><br> 
+                            <input type = "checkbox" id = "a30_4" name = "answer" value = "Full-time professional">
+                            <label for = "a30_4">Full-time professional</label><br> 
+                            <input type = "checkbox" id = "a30_5" name = "answer" value = "Part-time professional">
+                            <label for = "a30_5">Part-time professional</label><br> 
+                            <input type = "checkbox" id = "a30_6" name = "answer" value = "Self employed">
+                            <label for = "a30_6">Self employed</label><br> 
+                            <input type = "checkbox" id = "a30_7" name = "answer" value = "Unemployed">
+                            <label for = "a30_7">Unemployed</label><br> 
+                            <input type = "checkbox" id = "a30_8" name = "answer" value = "Not employed outside of the home (stay-at-home caregiver)">
+                            <label for = "a30_8">Not employed outside of the home (stay-at-home caregiver)</label><br>
+                            <input type = "checkbox" id = "a30_9" name = "answer" value = "Other (please specify)">
+                            <label for = "a30_9">Other (please specify)</label><br>  
+                        </form>
+                    </div>
+                    <input type = "checkbox" id = "q31" name = "q31" onclick = "showanswers('q31', 'answer31')">
+                    <label for = "q31">31. Working in industry (past)</label><br>
+                    <div id = "answer31" style = "display:none; padding-left: 50px;">
+                        <form>
+                            <input type = "checkbox" id = "a31_1" name = "answer" value = "Yes">
+                            <label for = "a31_1">Yes</label><br> 
+                            <input type = "checkbox" id = "a31_2" name = "answer" value = "No">
+                            <label for = "a31_2">No</label><br> 
+                        </form>
+                    </div>
+                </div>
+                <div style = "display:block;">
+                    <input type = "checkbox" id = "q32" name = "q32" onclick = "showanswers('q32', 'answer32')">
+                    <label for = "q32">32. Working in industry (present)</label><br>
+                    <div id = "answer32" style = "display:none; padding-left: 50px;">
+                        <form>
+                            <input type = "checkbox" id = "a32_1" name = "answer" value = "Yes">
+                            <label for = "a32_1">Yes</label><br> 
+                            <input type = "checkbox" id = "a32_2" name = "answer" value = "No">
+                            <label for = "a32_2">No</label><br> 
+                        </form>
+                    </div>
+                    <input type = "checkbox" id = "q35" name = "q35" onclick = "showanswers('q35', 'answer35')">
+                    <label for = "q35">35. Did Challenge help you</label><br>
+                    <div id = "answer35" style = "display:none; padding-left: 50px;">
+                        <form>
+                            <input type = "checkbox" id = "a35_1" name = "answer" value = "Yes">
+                            <label for = "a35_1">Yes</label><br> 
+                            <input type = "checkbox" id = "a35_2" name = "answer" value = "No">
+                            <label for = "a35_2">No</label><br> 
+                        </form>
+                    </div>
+                    <input type = "checkbox" id = "q37" name = "q37" onclick = "showanswers('q37', 'answer37')">
+                    <label for = "q37">37. Did Challenge help NASA</label><br>
+                    <div id = "answer37" style = "display:none; padding-left: 50px;">
+                        <form>
+                            <input type = "checkbox" id = "a37_1" name = "answer" value = "Yes">
+                            <label for = "a37_1">Yes</label><br> 
+                            <input type = "checkbox" id = "a37_2" name = "answer" value = "No">
+                            <label for = "a37_2">No</label><br> 
+                        </form>
+                    </div>
+                    <input type = "checkbox" id = "q40" name = "q40" onclick = "showanswers('q40', 'answer40')">
+                    <label for = "q40">40. Budget</label><br>
+                    <div id = "answer40" style = "display:none; padding-left: 50px;">
+                        <form>
+                            <input type = "checkbox" id = "a40_1" name = "answer" value = "<$1,000">
+                            <label for = "a40_1"><$1,000</label><br> 
+                            <input type = "checkbox" id = "a40_2" name = "answer" value = "$1,001-$5,000">
+                            <label for = "a40_2">$1,001-$5,000</label><br>
+                            <input type = "checkbox" id = "a40_3" name = "answer" value = "$5,001-$10,000">
+                            <label for = "a40_3">$5,001-$10,000</label><br> 
+                            <input type = "checkbox" id = "a40_4" name = "answer" value = "$10,001-$25,000">
+                            <label for = "a40_4">$10,001-$25,000</label><br> 
+                            <input type = "checkbox" id = "a40_5" name = "answer" value = "$25,001-$50,000">
+                            <label for = "a40_5">$25,001-$50,000</label><br> 
+                            <input type = "checkbox" id = "a40_6" name = "answer" value = "$50.001-$75,000">
+                            <label for = "a40_6">$50.001-$75,000</label><br> 
+                            <input type = "checkbox" id = "a40_7" name = "answer" value = "$75,001-$100,000">
+                            <label for = "a40_7">$75,001-$100,000</label><br> 
+                            <input type = "checkbox" id = "a40_8" name = "answer" value = "$100,001-150,000">
+                            <label for = "a40_8">$100,001-150,000</label><br>
+                            <input type = "checkbox" id = "a40_9" name = "answer" value = "$150,001-$200,000">
+                            <label for = "a40_9">$150,001-$200,000</label><br>  
+                            <input type = "checkbox" id = "a40_10" name = "answer" value = "$200,001-$300,000">
+                            <label for = "a40_10">$200,001-$300,000</label><br> 
+                            <input type = "checkbox" id = "a40_11" name = "answer" value = "$300,001-$400,000">
+                            <label for = "a40_11">$300,001-$400,000</label><br>
+                            <input type = "checkbox" id = "a40_12" name = "answer" value = "$400,001-$500,000">
+                            <label for = "a40_12">$400,001-$500,000</label><br> 
+                            <input type = "checkbox" id = "a40_13" name = "answer" value = "$500,001-$750,000">
+                            <label for = "a40_13">$500,001-$750,000</label><br> 
+                            <input type = "checkbox" id = "a40_14" name = "answer" value = "$750,001-$1,000,000">
+                            <label for = "a40_14">$750,001-$1,000,000</label><br> 
+                            <input type = "checkbox" id = "a40_15" name = "answer" value = "$1,000,001-$2,500,000">
+                            <label for = "a40_15">$1,000,001-$2,500,000</label><br> 
+                            <input type = "checkbox" id = "a40_16" name = "answer" value = "$2,500,001-$5,000,000">
+                            <label for = "a40_16">$2,500,001-$5,000,000</label><br> 
+                            <input type = "checkbox" id = "a40_17" name = "answer" value = ">$5,000,000">
+                            <label for = "a40_17">>$5,000,000</label><br>
+                        </form>
+                    </div>
+                    <input type = "checkbox" id = "q42" name = "q42" onclick = "showanswers('q42', 'answer42')">
+                    <label for = "q42">42. Time committment full-time</label><br>
+                    <div id = "answer42" style = "display:none; padding-left: 50px;">
+                        <form>
+                            <input type = "checkbox" id = "a42_1" name = "answer" value = "Yes">
+                            <label for = "a42_1">Yes</label><br> 
+                            <input type = "checkbox" id = "a42_2" name = "answer" value = "No">
+                            <label for = "a42_2">No</label><br> 
+                        </form>
+                    </div>
+                    <input type = "checkbox" id = "q43" name = "q43" onclick = "showanswers('q43', 'answer43')">
+                    <label for = "q43">43. % of full-time</label><br>
+                    <div id = "answer43" style = "display:none; padding-left: 50px;">
+                        <form>
+                            <input type = "checkbox" id = "a43_1" name = "answer" value = "<10%">
+                            <label for = "a43_1">less than 10%</label><br> 
+                            <input type = "checkbox" id = "a43_2" name = "answer" value = "11%-20%">
+                            <label for = "a43_2">11%-20%</label><br> 
+                            <input type = "checkbox" id = "a43_3" name = "answer" value = "21%-40%">
+                            <label for = "a43_3">21%-40%</label><br> 
+                            <input type = "checkbox" id = "a43_4" name = "answer" value = "41%-50%">
+                            <label for = "a43_4">41%-50%</label><br> 
+                            <input type = "checkbox" id = "a43_5" name = "answer" value = "51%-60%">
+                            <label for = "a43_5">51%-60%</label><br> 
+                            <input type = "checkbox" id = "a43_6" name = "answer" value = "61%-70%">
+                            <label for = "a43_6">61%-70%</label><br> 
+                            <input type = "checkbox" id = "a43_7" name = "answer" value = "71%-80%">
+                            <label for = "a43_7">71%-80%</label><br> 
+                            <input type = "checkbox" id = "a43_8" name = "answer" value = "81%-90%">
+                            <label for = "a43_8">81%-90%</label><br> 
+                            <input type = "checkbox" id = "a43_9" name = "answer" value = "91%-100%">
+                            <label for = "a43_9">91%-100%</label><br> 
+                            <input type = "checkbox" id = "a43_10" name = "answer" value = ">100%">
+                            <label for = "a43_10">>100%</label><br> 
+                        </form>
+                    </div>
+                </div>
+                <div style = "display:block;">
+                    <input type = "checkbox" id = "q51" name = "q51" onclick = "showanswers('q51','answer51')">
+                    <label for = "q51">51. Media exposure</label><br>
+                    <div id = "answer51" style = "display:none; padding-left: 50px;">
+                        <form>
+                            <input type = "checkbox" id = "a51_1" name = "answer" value = "Yes">
+                            <label for = "a51_1">Yes</label><br> 
+                            <input type = "checkbox" id = "a51_2" name = "answer" value = "No">
+                            <label for = "a51_2">No</label><br> 
+                            <input type = "checkbox" id = "a51_3" name = "answer" value = "Unsure">
+                            <label for = "a51_2">Unsure</label><br> 
+                        </form>
+                    </div>
+                    <input type = "checkbox" id = "q53" name = "q53" onclick = "showanswers('q53', 'answer53')">
+                    <label for = "q53">53. Publications</label><br>
+                    <div id = "answer53" style = "display:none; padding-left: 50px;">
+                        <form>
+                            <input type = "checkbox" id = "a53_1" name = "answer" value = "Yes">
+                            <label for = "a53_1">Yes</label><br> 
+                            <input type = "checkbox" id = "a53_2" name = "answer" value = "No">
+                            <label for = "a53_2">No</label><br> 
+                            <input type = "checkbox" id = "a53_3" name = "answer" value = "Unsure">
+                            <label for = "a53_2">Unsure</label><br> 
+                        </form>
+                    </div>
+                    <input type = "checkbox" id = "q55" name = "q55" onclick = "showanswers('q55', 'answer55')">
+                    <label for = "q55">55. Did Challenge help NASA</label><br>
+                    <div id = "answer55" style = "display:none; padding-left: 50px;">
+                        <form>
+                            <input type = "checkbox" id = "a55_1" name = "answer" value = "Yes">
+                            <label for = "a55_1">Yes</label><br> 
+                            <input type = "checkbox" id = "a55_2" name = "answer" value = "No">
+                            <label for = "a55_2">No</label><br> 
+                            <input type = "checkbox" id = "a55_3" name = "answer" value = "Unsure">
+                            <label for = "a55_2">Unsure</label><br> 
+                        </form>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <!--DOWNLOAD-->
+    <div id = "download" style="display:block; float:none">
+        <h2>Download filtered data as CSV</h2>
+        <form>
+            <center><input type = "button" value = "Download" onClick = "window.location.href = 'This PC/Downloads'"></center>
+        </form>
+    </div>
+
+    <!--SELECT QUESTION TO VIEW-->
+    <section id = "viewquestion" style="display:block;">
+        <h2>Select which question to view from the filtered data</h2>
+        <form action = "python_used_to_process_this.py">
+            <input type = "checkbox" id = "allQs" name = "allQs">
+            <label for = "allQs">All Questions</label><br>
+            <select name = question_dropdown>
+                <option value = 9>1. Have you participated in more than one Centennial Challenge?</option>
+                <option value = 10>2. In which Challenge did you most recently participate?</option>
+                <option value = 12>3. If there were multiple phases in the challenge, did you continue onto the following phase?</option>
+                <option value = 13>4. Why didn't you continue on to the following phase?</option>
+                <option value = 15>5. On a scale of 1 – 10, with 10 being the highest, how satisfied are you with your experience participating in this Challenge?</option>
+                <option value = 16>6. Why did you give that rating?</option>
+                <option value = 17>7. How likely is it that you would recommend participating in a Centennial Challenge to a friend or colleague?</option>
+                <option value = 18>8. Why did you give that rating?</option>
+                <option value = 19>9. Would you personally participate in another Centennial Challenge?</option>
+                <option value = 20>10. Why or why not?</option>
+                <option value = 21>11. What was the biggest benefit or most positive outcome you received from participating in the Challenge?</option>
+                <option value = 22>12. Did you win any phase(s), stage(s), or portion(s) of the Challenge?</option>
+                <option value = 23>13. When you first learned about the Challenge, why did you choose to participate?</option>
+                <option value = 39>14. If your reasons were not on the above list, please add them here.</option>
+                <option value = 40>15. Did your participation meet your expectations in each of these areas?</option>
+                <option value = 56>16. After participating, what do you see as the biggest value in participating? Please rank all that were relevant with 1 being the most relevant</option>
+                <option value = 72>17. If any values of participating were not listed above, please add them here. </option>
+                <option value = 73>18. How did you feel about the Challenge timeline and the time you had to develop your solution?</option>
+                <option value = 74>19. Why did you feel that way?</option>
+                <option value = 75>20. How did you feel about the difficulty of the Challenge in terms of what it was asking for you to provide in a solution? </option>
+                <option value = 76>21. Why did you feel that way?</option>
+                <option value = 77>22. Are you a citizen of the United States?</option>
+                <option value = 78>23. Why did you choose to compete even knowing you could not be awarded the prize purse?</option>
+                <option value = 79>24. What country are you from?</option>
+                <option value = 80>25. What were the most valuable incentives/support provided to you/your organization by NASA and/or the Challenge sponsors during the Challenge?</option>
+                <option value = 81>26. What incentives/support do you think NASA can offer moving forward to make it more beneficial to participants?</option>
+                <option value = 82>27. Were there any “barriers” that you felt made it difficult to participate?</option>
+                <option value = 83>28. What were the "barriers" that made it difficult to participate in the Challenge?</option>
+                <option value = 84>29. Do you have any suggestions about how the "barriers" can be addressed or removed in the future?</option>
+                <option value = 85>30. What was your affiliation at the time you participated in this Challenge?</option>
+                <option value = 87>31. Were you working in an industry specific to the Challenge prior to learning about the Challenge?</option>
+                <option value = 88>32. Are you currently working in an industry specific to the Challenge?</option>
+                <option value = 89>33. Why or why not?</option>
+                <option value = 90>34. In what industry are you currently working?</option>
+                <option value = 91>35. Do you feel that this Challenge helped move your work or your organization forward?</option>
+                <option value = 92>36. Why or why not?</option>
+                <option value = 93>37. Do you think that this Challenge helped move NASA forward?</option>
+                <option value = 94>38. Why or why not?</option>
+                <option value = 95>39. What impact do you think the solutions (your solution or solutions from other teams) can have on Earth applications?</option>
+                <option value = 96>40. How much money would you estimate you or your organization spent participating in this Challenge?</option>
+                <option value = 97>41. Does your response above include the following? (Please check all that apply.)</option>
+                <option value = 103>42. Was working on your solution for the Challenge your full-time job during the Challenge?</option>
+                <option value = 104>43. What percent of a normal 40 hour work week do you think you spent participating in the Challenge?</option>
+                <option value = 105>44. What was your full-time job while participating in the Challenge? </option>
+                <option value = 106>45. What is your favorite anecdote/story about participating?</option>
+                <option value = 107>46.What could NASA do now that the Challenge is over to further increase the impact of the Challenge?</option>
+                <option value = 108>47. What could NASA do now that the Challenge is over to further support you/your organization and other Challenge participants?</option>
+                <option value = 109>48. To summarize: What did you like best about participating in this Challenge?</option>
+                <option value = 110>49. What could be improved for future Challenges?</option>
+                <option value = 111>50. What else should we know about your experiences that were not covered in this survey?</option>
+                <option value = 112>51. Did your team or organization get any media as a result of participating?</option>
+                <option value = 113>52. Please feel free to add links to that media.</option>
+                <option value = 114>53. Did your team or organization submit any articles for publication or publish any reports or blogs?</option>
+                <option value = 115>54. Please feel free to add links to that material.</option>
+                <option value = 116>55. Did your team or organization get funding after the challenge?</option>
+                <option value = 117>56. Please feel free to share how much funding you received.</option>
+                <option value = 118>57. What are you doing now? Did the Challenge help you get there?</option>
+                <option value = 119>58. If you are comfortable with us sharing your experiences within NASA, please provide your name and email address here. </option>
+            </select>
+        </form>
+    </section>
+
+</html>
