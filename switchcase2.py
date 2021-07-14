@@ -1,56 +1,49 @@
-import pandas as pd
-import matplotlib.pyplot as plt
-get_ipython().run_line_magic('matplotlib', 'inline')
-plt.style.use('ggplot')
-import seaborn as sns
-import textwrap
-
-#this is just to specify which columns to use. Its kinda wordy but gets the job done
-cols = []
-for i in range(9,129):
-    cols.append(i)
-
-#For now just download to your computer and use that pathway or figure out how to download from google sheets.
-dataf = pd.read_csv(r'C:\users\cehall3\documents\NASA_Centennial_Challenges_Survey.csv', skiprows = [0,1], header = None, usecols = cols) 
-questions = pd.read_csv(r'C:\users\cehall3\documents\NASA_Centennial_Challenges_Survey.csv', nrows=2, header = None, usecols = cols)
-pd.set_option("display.max_rows", None, "display.max_columns", None)
-dataf
-
 def qtype(index):
-    if pd.isna(questions[index][0]):
-        return 5
-    elif questions[index][1].find('Open')!=-1:
-        return 4
-    elif questions[index][1].find('Response')!=-1 and questions[index+1][1].find('Other')==-1:
+    if questions[index][1].find('Open')!=-1:
         return 1
-    elif questions[index][1].find('Response')!=-1 and questions[index+1][1].find('Other')!=-1:
+    elif pd.isna(questions[index][0]):
         return 2
-    elif questions[index][1].find('Response')==-1 and questions[index][1].find('specify') == -1 and questions[index][1].find('Open') == -1:
+    elif questions[index][1].find('Response')!=-1 and questions[index+1][1].find('Other')==-1:
         return 3
+    elif questions[index][1].find('Response')!=-1 and questions[index+1][1].find('Other')!=-1:
+        return 4
+    elif questions[index][1].find('Response')==-1 and questions[index][1].find('specify') == -1 and questions[index][1].find('Open') == -1:
+        return 5
      
-#print(questions[10][0])  
-#print(qtype(16))
 def switch_case(index,df):
-    if qtype(index) == 5:
+    #Short Answer
+    if qtype(index) == 1:
+        print(questions[index][0])
+        print(df[index])
+    
+    elif qtype(index) == 2:
         print("ERROR: Inputted index is part of a multi-column question. Enter the first index of the question.")
         pass
     
-    #Short Answer
-    elif qtype(index) == 4:
-        print(df[index])
-        #return df[index]
-    
     #normal response single-column
-    elif qtype(index) == 1:
-        pass #this is where Rishi's code will go
+    elif qtype(index) == 3:
+        question_df=df[index]
+        plt.figure(9)
+        g = sns.countplot(y = df[index])
+        q_title = questions[index][0]
+        plt.title(q_title)
+        plt.ylabel("Answer")
+        plt.xlabel("Count")
+        #fig=plt.figure(9)
+        #question_df.plot.hist()
+        #plt.xlabel("Ranking")
+        #plt.title('Reason for particpation:Applying existing technology in a new way')
+        plt.show
     
     #has "specify other" option
-    elif qtype(index) == 2:
+    elif qtype(index) == 4:
         question_df = df[index]
         plt.figure(figsize=(8,5))
         g = sns.countplot(y = df[index])
         q_title = questions[index][0]
         plt.title(q_title)
+        plt.ylabel("Answer")
+        plt.xlabel("Count")
         print(g)
         print(df[index+1])
         #return question_df
@@ -76,8 +69,28 @@ def switch_case(index,df):
         p_title = questions[index][0]
         plt.title(p_title)
     
+    #question 41
+    elif index == 97:
+        s = df[97].count()
+        t = df[98].count()
+        c = df[99].count()
+        e = df[100].count()
+        o = df[100].count()
+        
+        xaxis = [s,t,c,e,o]
+        yaxis = ['Salaries', 'Travel costs', 'Contractor/consultant fees', 'Equipment costs', 'Overhead']
+        plt.figure(figsize = (8,5))
+        sns.barplot(x = xaxis, y = yaxis, orient = 'h')
+        plt.title(questions[index][0])
+        
+    elif index == 119:
+        print(questions[index][0])
+        for i in range(119, 129):
+            print(questions[i][1])
+            print(df[i])
+    
     #question 13 and 16
-    elif qtype(index) == 3:
+    elif qtype(index) == 5:
         #create new data frame
         first_col = index
         last_col = index
@@ -106,5 +119,6 @@ def switch_case(index,df):
         print(g)
         
         #return question_df
+    
         
-switch_case(10, dataf)
+switch_case(9, dataf)
